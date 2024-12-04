@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('authentication/', include('authentication.urls')),
     path('userPreference/', include('userPreference.urls')),
+    path('article/', include('article.urls')),
+    path('savedArticle/', include('savedArticle.urls')),
 ]

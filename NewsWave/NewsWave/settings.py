@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     
     'authentication',
     'userPreference',
+    'article',
+    'savedArticle',
 ]
 
 MIDDLEWARE = [
