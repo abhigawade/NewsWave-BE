@@ -33,6 +33,7 @@ AUTH_USER_MODEL = 'authentication.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,9 +43,10 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'rest_framework_simplejwt',
-     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt.token_blacklist',
     
     'authentication',
+    'userPreference',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +129,8 @@ TEMPLATES = [
         },
     },
 ]
+
+JET_SIDE_MENU_COMPACT = True  # For jet
 
 WSGI_APPLICATION = 'NewsWave.wsgi.application'
 
