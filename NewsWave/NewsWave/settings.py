@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,6 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-jx-aa@8pe@&c^wfb)igv&d^k0(=u#7=k&3$g+2f59d^nf*dioe'
+
+# Load environment variables from .env.development
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env.development"))
+
+# Get API key from environment variables
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,6 +55,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    
+    'django_celery_beat',
+    'django_celery_results',
     
     'authentication',
     'userPreference',
@@ -72,8 +84,17 @@ REST_FRAMEWORK = {
     
 }
 
+
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Frontend's origin
+    "http://localhost:5173",  # Frontend running on localhost
+    "http://127.0.0.1:5173"  # Alternatively, frontend on 127.0.0.1
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True #change it when project completed
@@ -118,10 +139,10 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:9000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080",
+#     "http://127.0.0.1:9000",
+# ]
 
 ROOT_URLCONF = 'NewsWave.urls'
 
@@ -185,7 +206,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -201,3 +222,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ""  
+EMAIL_HOST_PASSWORD = ""  # Use an App Password (not your Gmail password)
+
+
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Use Redis as a broker
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django_celery_results.backends.database:DatabaseBackend'
+CELERY_TIMEZONE = 'Asia/Kolkata'

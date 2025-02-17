@@ -129,6 +129,10 @@ ENV/
 env.bak/
 venv.bak/
 
+#Secreat key file
+.env.development
+
+
 # Spyder project settings
 staticfiles
 .spyderproject
