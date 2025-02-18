@@ -13,6 +13,7 @@ from django.conf import settings
 NEWS_API_URL = 'https://api.thenewsapi.com/v1/news/all?api_token=8NcN3P8dAMwDYFMhQ8TRYdueD5qsOsMOrfv6PXJE&language=en&limit=3'
 
 
+
 @shared_task
 def get_articles():
     """Fetch news from an external API and store it in the database."""
