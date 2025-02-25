@@ -12,6 +12,7 @@ from article.models import Article
 
 class savedArticleViewset(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
+    serializer_class = SavedArticleSerializer
     
     def list(self, request):
         queryset = SavedArticle.objects.filter(user=request.user)

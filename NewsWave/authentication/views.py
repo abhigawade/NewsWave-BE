@@ -23,7 +23,7 @@ def get_tokens_for_user(user):
 
 
 class UserRegistrationView(viewsets.ViewSet):
-   
+    serializer_class = UserRegistrationSerializer
     def create(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
@@ -39,6 +39,7 @@ class UserRegistrationView(viewsets.ViewSet):
     
     
 class UserLoginView(viewsets.ViewSet):
+    serializer_class = UserLoginSerializer
     def create(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
@@ -54,6 +55,7 @@ class UserLoginView(viewsets.ViewSet):
     
     
 class UserProfileView(viewsets.ViewSet):
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
     def retrieve(self, request):
         user = request.user
@@ -71,7 +73,7 @@ class UserProfileView(viewsets.ViewSet):
     
 class UserChangePasswordView(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
-    
+    serializer_class = UserChangePasswordSerializer
     def update(self, request):
         serializer = UserChangePasswordSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():

@@ -10,13 +10,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import string
 
-# NEWS_API_URL = "https://newsapi.org/v2/everything?q=india&apiKey=21025d1583d44ba6a0575f90b9d68ac0"
-# API_KEY = "21025d1583d44ba6a0575f90b9d68ac0"
+
 
 # api_key = settings.NEWS_API_KEY
 
-# NEWS_API_URL = 'https://api.thenewsapi.com/v1/news/all?api_token=8NcN3P8dAMwDYFMhQ8TRYdueD5qsOsMOrfv6PXJE&language=en&limit=3'   # The Newsapi
-
+# NEWS_API_URL = ''   # The Newsapi
 
 # @shared_task
 # def get_articles():
@@ -29,7 +27,6 @@ import string
 #     response = requests.get(NEWS_API_URL)
     
 #     print(response.status_code)
-#     print('****************************************************')
 
 #     if response.status_code == 200:
 #         news_data = response.json()
@@ -55,63 +52,68 @@ import string
 
 
 
-NEWS_API_URL = "https://api.worldnewsapi.com/top-news?source-country=in&language=en&date=2026-01-26"
-API_KEY = "bb2cf71f0e4b4c0c8293bbd068acaa80"
+NEWS_API_URL = "https://api.worldnewsapi.com/top-news?source-country=in&language=en&date=2025-01-07"
+API_KEY = settings.NEWS_API_KEY
 
 nltk.download("punkt")
 nltk.download("stopwords")
 
 CATEGORIES_KEYWORDS = {
-    "Politics": [
+    "general": [
+        "news", "trending", "update", "daily", "breaking", "report", "latest",
+        "current events", "headlines", "important", "media", "press", "international",
+        "global", "local", "coverage", "top stories", "happenings", "today"
+    ],
+    "politics": [
         "election", "government", "senate", "president", "parliament", "policy",
         "democracy", "minister", "congress", "laws", "vote", "diplomacy", "legislation",
         "political", "campaign", "rights", "opposition", "governance"
     ],
     
-    "Sports": [
+    "sports": [
         "football", "soccer", "basketball", "tennis", "olympics", "FIFA", 
         "cricket", "badminton", "athletics", "hockey", "golf", "marathon",
         "boxing", "wrestling", "NBA", "Premier League", "World Cup", "tournament"
     ],
     
-    "Technology": [
+    "technology": [
         "AI", "artificial intelligence", "tech", "software", "gadgets", "Google", 
         "Microsoft", "innovation", "blockchain", "cybersecurity", "cloud computing",
         "5G", "robotics", "IoT", "virtual reality", "data science", "programming",
         "startup", "machine learning", "automation", "space", "Elon Musk"
     ],
     
-    "Health": [
+    "health": [
         "covid", "health", "vaccine", "medicine", "hospital", "doctor", "wellness", 
         "mental health", "fitness", "nutrition", "cancer", "treatment", "heart disease", 
         "yoga", "workout", "pandemic", "therapy", "diet", "flu", "hygiene", "physiotherapy"
     ],
     
-    "Business": [
+    "business": [
         "stock", "market", "finance", "investment", "economy", "entrepreneur", "startup", 
         "mergers", "banking", "real estate", "cryptocurrency", "trading", "corporate", 
         "shares", "interest rate", "inflation", "GDP", "mutual funds", "business growth"
     ],
     
-    "Entertainment": [
+    "entertainment": [
         "movie", "music", "celebrity", "Hollywood", "Bollywood", "Netflix", "actor", 
         "actress", "award", "festival", "box office", "theater", "series", "showbiz", 
         "director", "cinema", "Grammy", "Oscar", "concert", "streaming", "drama"
     ],
     
-    "Food": [
+    "food": [
         "recipe", "cooking", "cuisine", "restaurant", "chef", "healthy eating", "vegan", 
         "vegetarian", "fast food", "dessert", "spices", "street food", "breakfast", 
         "lunch", "dinner", "snack", "drink", "organic", "diet", "nutrition", "protein"
     ],
     
-    "Travel": [
+    "travel": [
         "vacation", "tourism", "adventure", "flights", "hotel", "resort", "beach", 
         "mountains", "road trip", "hiking", "camping", "backpacking", "passport", 
         "visa", "airlines", "cruise", "holiday", "tour", "destinations", "sightseeing"
     ],
     
-    "India": [
+    "india": [
         "Delhi", "Mumbai", "Kolkata", "Chennai", "Hyderabad", "Bangalore", "Pune", 
         "Indian economy", "Modi", "elections", "RBI", "Indian culture", "Taj Mahal", 
         "Ayodhya", "Indian festival", "Diwali", "Holi", "Republic Day", "Independence Day",
@@ -119,7 +121,7 @@ CATEGORIES_KEYWORDS = {
         "ISRO", "Chandrayaan", "Indian startup", "Indian cuisine", "Indian heritage"
     ],
 
-    "Trends": [
+    "trends": [
         "viral", "trending", "social media", "TikTok", "Instagram", "Twitter", "YouTube", 
         "meme", "challenge", "influencer", "NFT", "crypto", "Metaverse", "AI revolution", 
         "streaming wars", "celebrity gossip", "fashion trends", "climate change", 
@@ -141,7 +143,7 @@ def categorize_article_nltk(title, content):
         if any(keyword.lower() in words for keyword in keywords):
             found_categories.add(category)
 
-    return list(found_categories) if found_categories else ["General"]
+    return list(found_categories) if found_categories else ["general"]
 
 
 

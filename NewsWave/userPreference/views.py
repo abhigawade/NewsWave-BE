@@ -6,11 +6,20 @@ from userPreference.serializers import UserPreferenceSerializer
 
 class UserPreferenceView(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
+    serializer_class = UserPreferenceSerializer
     
     def create(self, request):
         if UserPreference.objects.filter(user=request.user).exists():
             return Response({"error": "User already has preferences."}, status=status.HTTP_400_BAD_REQUEST)
-        serializer = UserPreferenceSerializer(data=request.data)
+        data = request.data.copy()
+        
+        if "preferred_topics" in data:
+            data["preferred_topics"] = [topic.lower() for topic in data["preferred_topics"]]
+            
+        if "preferred_sources" in data:
+            data["preferred_sources"] = [source.lower() for source in data["preferred_sources"]]
+        
+        serializer = UserPreferenceSerializer(data=data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(
@@ -29,7 +38,15 @@ class UserPreferenceView(viewsets.ViewSet):
 
     def patch(self, request):
         preferences, created = UserPreference.objects.get_or_create(user=request.user)
-        serializer = UserPreferenceSerializer(preferences, data=request.data, partial=True)
+        data = request.data.copy()
+        
+        if "preferred_topics" in data:
+            data["preferred_topics"] = [topic.lower() for topic in data["preferred_topics"]]
+            
+        if "preferred_sources" in data:
+            data["preferred_sources"] = [source.lower() for source in data["preferred_sources"]]
+        
+        serializer = UserPreferenceSerializer(preferences, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(

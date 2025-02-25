@@ -27,10 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jx-aa@8pe@&c^wfb)igv&d^k0(=u#7=k&3$g+2f59d^nf*dioe'
 
 # Load environment variables from .env.development
-load_dotenv(os.path.join(os.path.dirname(__file__), ".env.development"))
+load_dotenv(os.path.join(BASE_DIR, "NewsWave", ".env.development"))
+
+
 
 # Get API key from environment variables
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,6 +58,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    
+    'drf_spectacular',
     
     'django_celery_beat',
     'django_celery_results',
@@ -82,6 +87,16 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
+    
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'NewsWave API Documentation',
+    'DESCRIPTION': 'API documentation for NewsWave project.',   
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,  # Hides the schema itself from API docs
 }
 
 
