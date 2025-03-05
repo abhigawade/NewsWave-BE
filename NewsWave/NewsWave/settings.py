@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jx-aa@8pe@&c^wfb)igv&d^k0(=u#7=k&3$g+2f59d^nf*dioe'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # Load environment variables from .env.development
 load_dotenv(os.path.join(BASE_DIR, "NewsWave", ".env.development"))
@@ -37,7 +37,7 @@ NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ["newswave.onrender.com","127.0.0.1", "localhost"]
 
