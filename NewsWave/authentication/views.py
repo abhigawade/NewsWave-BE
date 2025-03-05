@@ -29,11 +29,6 @@ class UserRegistrationView(viewsets.ViewSet):
         if serializer.is_valid():
             user = serializer.save()
             token = get_tokens_for_user(user)
-            subject = "Welcome to NewsWave!"
-            message = f"Hello {user.first_name},\n\nThank you for registering on NewsWave! We're excited to have you."
-            from_email = settings.EMAIL_HOST_USER
-            recipient_list = [user.email]
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
             return Response({'message': 'User created successfully', 'user': user.id, 'token': token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

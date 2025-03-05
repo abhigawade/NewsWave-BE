@@ -25,6 +25,7 @@ urlpatterns = [
     path('userPreference/', include('userPreference.urls')),
     path('article/', include('article.urls')),
     path('savedArticle/', include('savedArticle.urls')),
+    path('comments/', include('comments.urls')),
     
     
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),  # OpenAPI Schema

@@ -52,7 +52,7 @@ import string
 
 
 
-NEWS_API_URL = "https://api.worldnewsapi.com/top-news?source-country=in&language=en&date=2025-01-07"
+NEWS_API_URL = "https://api.worldnewsapi.com/top-news?source-country=in&language=en&date=2025-02-24"
 API_KEY = settings.NEWS_API_KEY
 
 nltk.download("punkt")
