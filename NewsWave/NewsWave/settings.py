@@ -37,9 +37,9 @@ NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG")
+DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1")
 
-ALLOWED_HOSTS = ["newswave.onrender.com","127.0.0.1", "localhost"]
+ALLOWED_HOSTS = os.getenv('newswave-be.onrender.com', '127.0.0.1', 'localhost')
 
 
 AUTH_USER_MODEL = 'authentication.User'
